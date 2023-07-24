@@ -11,7 +11,6 @@ router.post('/recognition', upload.single('image'), async (req, res)=>{
         const imagePath = req.file.path;
         const processedImage = await sharp(imagePath).resize(224, 224).toBuffer();
 
-
         res.status(200).json({ message: "Image received." })
     }catch(err){
         console.error(err)
