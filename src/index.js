@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 require('dotenv').config()
 
-const imageRoute = require('./routes/imageRoute');
+const imageRouter = require('./routes/imageRoute');
 
 app.use('/api', imageRoute);
 
