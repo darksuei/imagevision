@@ -5,6 +5,7 @@ require('dotenv').config()
 const imageRouter = require('./routes/imageRoute');
 
 app.use('/api', imageRouter);
+app.use('/uploads', express.static('uploads'));
 
 app.get('/',(req, res)=>{
     res.send("Hello there")
