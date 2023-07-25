@@ -1,12 +1,10 @@
 const tf = require("@tensorflow/tfjs");
-const tfcore = require("@tensorflow/tfjs-node");
 const mobilenet = require("@tensorflow-models/mobilenet");
-const fs = require("fs");
+const image = require("get-image-data");
 
-
-function detectObject(url) {
+function detectObject(buffer) {
   return new Promise((resolve, reject) => {
-    image(url, async (err, image) => {
+    image(buffer, async (err, image) => {
       if (err) {
         reject(err);
       } else {
