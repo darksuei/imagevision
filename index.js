@@ -2,13 +2,13 @@ const express = require('express');
 const app = express();
 require('dotenv').config()
 
-const imageRouter = require('./routes/imageRoute');
+const imageRouter = require('./src/routes/imageRoute');
 
-app.use('/', imageRouter);
+app.use('/api', imageRouter);
 app.use('/uploads', express.static('uploads'));
 
-app.get('/',(req, res)=>{
-    res.send("Hello there")
+app.get('/api',(req, res)=>{
+    res.send("Welcome to image classification API")
 })
 
 app.listen(process.env.PORT || 3000, ()=>{
