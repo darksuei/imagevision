@@ -2,10 +2,10 @@
   "name": "imagevisonapi",
   "version": "1.0.0",
   "description": "RESTful API for Image recognition",
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {
     "test": "jest --detectOpenHandles",
-    "start": "nodemon src/index.js"
+    "start": "nodemon index.js"
   },
   "keywords": [],
   "author": "Suei",
