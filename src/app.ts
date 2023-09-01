@@ -12,7 +12,7 @@ const fastify = Fastify({
 
 fastify.register(imageRecognitionHandler, { prefix: '/api'})
 
-fastify.get('/api', (req, reply) => {
+fastify.get('/*', (req, reply) => {
     return reply.status(200).send({
         status : "Success",
         message : "Welcome to image vision API!",
