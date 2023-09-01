@@ -5,7 +5,7 @@
   "main": "src/app.ts",
   "scripts": {
     "test": "jest --detectOpenHandles",
-    "start": "node src/app.js",
+    "start": "ts-node src/app.ts",
     "dev": "nodemon --exec ts-node src/app.ts"
   },
   "keywords": [],
