@@ -25,7 +25,8 @@ fastify.get('/*', (req, reply) => {
 const start = async () => {
     try{
         fastify.listen({ 
-            port: PORT || 3000
+            port: PORT || 3000,
+            host: '0.0.0.0'
          })
         fastify.log.info(`Server running: ${fastify.server.address}`)
     }catch(error){
