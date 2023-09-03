@@ -1,6 +1,14 @@
-# ImageVision - RESTful API for Image Recognition 😸
+# Image Vision - A REST API for Image Recognition
 
-ImageVision is a RESTful API that utilizes image recognition algorithms and machine learning models to identify objects in images. Make requests to this API with images, and the API will return the identified objects with their confidence scores. Please note this API uses pre-trained models and is not perfect.
+ImageVision is an API that utilizes a tensorflowjs image recognition model to identify objects in images. Make requests to this API with image(s) and get a response of all the identified objects with their respective confidence values [probability of successful recognition].
+
+Here's the link to the API >> https://image-vision-api.onrender.com/ <<
+
+                                                          
+Sample usage of the API >> [here](https://github.com/Suei43/imagevison-fe) <<
+
+Response caching, temporary image storage and response time enhancement coming soon!
+
 - Image recognition using TensorFlow.js and MobileNet model.
 - Confidence threshold customization for object detection results.
 - Model selection option to choose specific image recognition models(in progress).
@@ -56,13 +64,13 @@ curl -X POST -F "image=@path/to/your/image.jpg" -F "confidenceThreshold=0.5" -F 
 ```
 
 ## Available Endpoints
-- **GET /api:** Welcome message 😁.
+- **GET `/api` :** Welcome message/ Health Check 😁.
 
-- **POST /api/image-recognition:** Perform image recognition on the provided image with optional customization parameters.
+- **POST `/api/image-recognition` :** Perform image recognition on the provided image with optional customization parameters.
   - Request body:
     - image: The image file to be recognized.
-    - confidenceThreshold (optional): The confidence threshold for object detection (default: 0.5).
-    - model (optional): The specific model to be used for image recognition (default: MobileNet).
+    - confidenceThreshold (optional): The confidence threshold for object detection, between 0 and 1 (default: 0.1).
+    - model (optional): The specific model to be used for image recognition (default: TFJS MobileNet).
 
 ## Contributing
 
