@@ -33,13 +33,11 @@ npm install
 
 ```
 
-3. Download the TensorFlow MobileNet model:
-
-To run the API, you need to download the MobileNet model from TensorFlow Hub. You can use the following script to download it:
+3. Start the server:
 
 ```bash
 
-node download-model.js
+npm run start
 
 ```
 
