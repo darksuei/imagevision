@@ -1,4 +1,5 @@
 import Fastify, { FastifyPluginCallback } from 'fastify';
+import authMiddleware from '../middlewares/authorization';
 const multipart = require('fastify-multipart')
 const fastifyMulter = require('fastify-multer')
 const sharp = require('sharp');
@@ -19,7 +20,7 @@ const imageRecognitionHandler: FastifyPluginCallback = async (fastify, opts, nex
   })
 
 
-  fastify.post('/image-recognition', {preHandler: upload.single('image')}, async(req: any, reply) => {
+  fastify.post('/image-recognition', {preHandler: [ authMiddleware, upload.single('image')]}, async(req: any, reply) => {
     const body = req.body 
     if (req.file && !body.files)
     return reply.code(400).send({ error: 'Please upload an image.' });

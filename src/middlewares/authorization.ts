@@ -8,8 +8,14 @@ const authMiddleware = async (request: FastifyRequest, reply: FastifyReply) => {
 
     userRepository.then ( async (userRepository) => {
         const isValidKey = await validateApiKey(userRepository, apiKey);
-        if (!apiKey || !isValidKey) {
-            reply.code(401).send({ error: 'Unauthorized' });
+        
+        switch (true) {
+            case !apiKey:
+              reply.code(401).send({ error: 'Please specify an API key.' });
+              break;
+            case !isValidKey:
+              reply.code(401).send({ error: 'Invalid API key.' });
+              break;
           }
     })
 };
