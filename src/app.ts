@@ -5,6 +5,7 @@ import { AppDataSource } from '../typeormconfig'
 import { Users } from './entities/Users'
 import { databaseConnection } from './utils/dbConnection'
 import apiKeyHandler from './routes/apiKey'
+import adminHandler from './routes/admin'
 
 export const userRepository = databaseConnection(Users);
 
@@ -16,6 +17,7 @@ const fastify = Fastify({
     logger: true
 })
 
+fastify.register(adminHandler, { prefix: '/api'})
 fastify.register(apiKeyHandler, { prefix: '/api'})
 fastify.register(imageRecognitionHandler, { prefix: '/api'})
 

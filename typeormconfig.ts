@@ -2,8 +2,10 @@ import { config } from 'dotenv'
 import { DataSource } from 'typeorm'
 import { Users } from './src/entities/Users'
 
+config();
+
 export const AppDataSource = new DataSource({
     "type": "mongodb",
-    "url": 'mongodb+srv://Suei:Rrxgio43@cluster0.ryvunza.mongodb.net/imagevision',
+    "url": process.env.MONGO_URI,
     "entities": [Users,]
 })

@@ -1,14 +1,16 @@
 import Fastify, { FastifyPluginCallback } from 'fastify';
+import { userRepository } from '../app';
+const { config } = require('dotenv')
 const { hash } =  require('bcrypt');
-import { databaseConnection } from '../utils/dbConnection';
+const { generateApiKey } = require('../utils/utils')
 
+config();
 
 const fastify = Fastify();
 
 const apiKeyHandler: FastifyPluginCallback = async (fastify, opts, next) => {
-    const userRepository = await databaseConnection;
 
-    fastify.get('/authenticate', (request, reply) => {
+    fastify.get('/auth', (request, reply) => {
         reply.code(200).send({
             message: "Success",
             note: "Send a POST request to this url with your email address and password to generate an api key.",
@@ -19,19 +21,27 @@ const apiKeyHandler: FastifyPluginCallback = async (fastify, opts, next) => {
         })
     })
 
-    fastify.post('/authenticate', (request, reply) => {
+    fastify.post('/auth', (request, reply) => {
         const email = (request.body as { email: string }).email;
         const password = (request.body as { password: string }).password;
-        console.log(email, password)
+        console.log("DETAILS: ",email, password)
         
-        hash(password, process.env.SALT_ROUNDS).then((hash: string) => {
-            console.log(hash)
-
+        hash(password, Number(process.env.SALT_ROUNDS)).then((hash: string) => {
+            const API_KEY = generateApiKey(hash)
             const user = {
-                email, hash
+                email,
+                password: hash,
+                API_KEY
             }
+            
+            userRepository.then( data => {
+                data.save(user)
+            })
+            reply.code(201).send({
+                message: "Success",
+                User: user
+            })
 
-            // userRepository.save(user)
         });
     })
 

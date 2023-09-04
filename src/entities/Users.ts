@@ -15,4 +15,6 @@ export class Users {
     @Column()
     responses!: object
 
+    @Column()
+    API_KEY!: string
 }
