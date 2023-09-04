@@ -1,6 +1,12 @@
 import Fastify from 'fastify'
 import {config} from 'dotenv'
 import imageRecognitionHandler from './routes/imageRoute'
+import { AppDataSource } from '../typeormconfig'
+import { Users } from './entities/Users'
+import { databaseConnection } from './utils/dbConnection'
+import apiKeyHandler from './routes/apiKey'
+
+export const userRepository = databaseConnection(Users);
 
 config()
 
@@ -10,6 +16,7 @@ const fastify = Fastify({
     logger: true
 })
 
+fastify.register(apiKeyHandler, { prefix: '/api'})
 fastify.register(imageRecognitionHandler, { prefix: '/api'})
 
 fastify.get('/*', (req, reply) => {

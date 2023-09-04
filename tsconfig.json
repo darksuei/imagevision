@@ -3,8 +3,10 @@
     "target": "ES6",
     "module": "CommonJS",        // or your desired module system
     "outDir": "./dist",          // specify the output directory
-    "rootDir": "./src",          // specify the source directory
+    "rootDir": "./",          // specify the source directory
     "strict": true,              // enable strict type checking
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     // other options...
   },
   "include": ["src/**/*.ts"],   // specify the source files to include
