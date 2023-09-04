@@ -18,26 +18,21 @@ Response caching, temporary image storage and response time enhancement coming s
 1. Clone the repository:
 
 ```
-
 git clone https://github.com/Suei43/imagevision.git
 
 cd imagevision
-
 ```
 
 2. Install the dependencies:
 
 ```
-
 npm install
-
 ```
 
-3. Start the server:
+3. Start the server in development mode:
 
 ```bash
-
-npm run start
+npm run dev
 
 ```
 
