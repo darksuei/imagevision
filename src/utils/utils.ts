@@ -7,6 +7,18 @@ const generateApiKey = (key:string) => {
     return apiKey;
 }
 
+const validateApiKey = async (userRepository: any, key:string) => {
+        const user = await userRepository.findOne({
+            where: {
+            API_KEY: key,
+            },
+        });
+        console.log("USER: ", user)
+        return user ? true : false
+    
+}
+
 module.exports = {
-    generateApiKey
+    generateApiKey,
+    validateApiKey
 }

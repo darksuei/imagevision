@@ -1,12 +1,10 @@
-import Fastify, { FastifyPluginCallback } from 'fastify';
+import Fastify, { FastifyPluginCallback, FastifyReply, FastifyRequest } from 'fastify';
 import { userRepository } from '../app';
 const { config } = require('dotenv')
 const { hash } =  require('bcrypt');
 const { generateApiKey } = require('../utils/utils')
 
 config();
-
-const fastify = Fastify();
 
 const apiKeyHandler: FastifyPluginCallback = async (fastify, opts, next) => {
 
