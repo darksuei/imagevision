@@ -14,8 +14,7 @@ const validateApiKey = async (userRepository: any, key:string) => {
             },
         });
         console.log("USER: ", user)
-        return user ? true : false
-    
+        return user ? true : false    
 }
 
 module.exports = {

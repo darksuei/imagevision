@@ -1,10 +1,10 @@
 import Fastify, { FastifyPluginCallback } from 'fastify';
 import authMiddleware from '../middlewares/authorization';
+import { uploadFileDbx } from '../utils/dropbox';
 const multipart = require('fastify-multipart')
 const fastifyMulter = require('fastify-multer')
 const sharp = require('sharp');
 const detectObject = require('../utils/detection');
-const {join} = require('path')
 
 const fastify = Fastify()
 fastify.register(multipart)
@@ -19,43 +19,46 @@ const imageRecognitionHandler: FastifyPluginCallback = async (fastify, opts, nex
     })
   })
 
-
   fastify.post('/image-recognition', {preHandler: [ authMiddleware, upload.single('image')]}, async(req: any, reply) => {
-    const body = req.body 
-    if (req.file && !body.files)
+    if (req.file && !req.files)
     return reply.code(400).send({ error: 'Please upload an image.' });
 
+  
   // If user specifies a confidence threshold, check if it is between 0 and 1
-    if (body.confidenceThreshold) {
-      if (body.confidenceThreshold < 0 || body.confidenceThreshold > 1) {
+  if (req.body.confidenceThreshold) {
+      if (req.body.confidenceThreshold < 0 || req.body.confidenceThreshold > 1) {
         return reply
-          .code(400)
-          .send({ error: 'Confidence threshold must be between 0 and 1' });
+        .code(400)
+        .send({ error: 'Confidence threshold must be between 0 and 1' });
       }
     }
-
+    
     try {
-      if (body.file) {
+      if (req.file) {
         // If a single image is uploaded, process and detect objects in it
+
+        //Upload the file to dropbox temporarily
+        uploadFileDbx(req.file.originalname, `/public/${req.file.filename}` )
+        
         const processedImageBuffer = await processImage(req.file.path);
         const imageClassification = await detectObject(
           processedImageBuffer,
-          body.confidenceThreshold || 0.1
+          req.body.confidenceThreshold || 0.1
         );
         reply.code(200).send({
           message: 'Image classification successful',
-          fileName: body.file.originalname,
+          fileName: req.file.originalname,
           classification: imageClassification,
         });
       }
-      else if (body.files && body.files.length > 0) {
+      else if (req.files && req.files.length > 0) {
         // If multiple images are uploaded, process and detect objects in each of them
         const results = [];
-        for (const file of body.files) {
+        for (const file of req.files) {
           const processedImageBuffer = await processImage(file.path);
           const imageClassification = await detectObject(
             processedImageBuffer,
-            body.confidenceThreshold || 0.1
+            req.body.confidenceThreshold || 0.1
           );
           results.push({
             id: file.filename,

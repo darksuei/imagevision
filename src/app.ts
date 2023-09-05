@@ -6,17 +6,24 @@ import { Users } from './entities/Users'
 import { databaseConnection } from './utils/dbConnection'
 import apiKeyHandler from './routes/apiKey'
 import adminHandler from './routes/admin'
+import cors from '@fastify/cors'
+import { getDbxAcc } from './utils/dropbox'
 
 export const userRepository = databaseConnection(Users);
 
 config()
 
 const PORT = process.env.PORT as number|undefined
+getDbxAcc();
 
 const fastify = Fastify({
     logger: true
 })
 
+fastify.register(cors, {
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+})
 fastify.register(adminHandler, { prefix: '/api'})
 fastify.register(apiKeyHandler, { prefix: '/api'})
 fastify.register(imageRecognitionHandler, { prefix: '/api'})
