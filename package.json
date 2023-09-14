@@ -13,6 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "@fastify/cors": "^8.3.0",
+    "@fastify/multipart": "^7.7.3",
     "@tensorflow-models/mobilenet": "^2.1.0",
     "@tensorflow/tfjs": "^4.9.0",
     "@tensorflow/tfjs-node": "^4.9.0",
@@ -21,7 +22,6 @@
     "dropbox": "^10.34.0",
     "fastify": "^4.22.0",
     "fastify-multer": "^2.0.3",
-    "fastify-multipart": "^5.4.0",
     "get-image-data": "^5.0.0",
     "jimp": "^0.22.10",
     "mongodb": "^6.0.0",
@@ -36,6 +36,7 @@
     "@types/jest": "^29.5.4",
     "@types/node": "^20.5.7",
     "jest": "^29.6.1",
+    "pino-pretty": "^10.2.0",
     "supertest": "^6.3.3"
   },
   "repository": "git@github.com:Suei43/imagevision.git"

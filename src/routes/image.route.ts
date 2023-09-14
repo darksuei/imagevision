@@ -1,13 +1,12 @@
 import Fastify, { FastifyPluginCallback } from 'fastify';
 import authMiddleware from '../middlewares/authorization';
-import { uploadFileDbx } from '../utils/dropbox';
-const multipart = require('fastify-multipart')
+// const multipart = require('fastify-multipart')
 const fastifyMulter = require('fastify-multer')
 const sharp = require('sharp');
 const detectObject = require('../utils/detection');
 
 const fastify = Fastify()
-fastify.register(multipart)
+// fastify.register(multipart)
 fastify.register(fastifyMulter.contentParser)
 
 let upload = fastifyMulter({ dest: 'public/' });
@@ -15,7 +14,10 @@ let upload = fastifyMulter({ dest: 'public/' });
 const imageRecognitionHandler: FastifyPluginCallback = async (fastify, opts, next) => {
   fastify.get('/image-recognition', (req,reply) => {
     reply.code(200).send({
-      message: "Please send a post request with your image to this route"
+      message: "Please send a post request with your image to this route for recognition",
+      params: {
+        confidenceThreshold: "A number between 0 and 1[optional, default = 0.1]"
+      }
     })
   })
 
@@ -35,11 +37,7 @@ const imageRecognitionHandler: FastifyPluginCallback = async (fastify, opts, nex
     
     try {
       if (req.file) {
-        // If a single image is uploaded, process and detect objects in it
-
-        //Upload the file to dropbox temporarily
-        uploadFileDbx(req.file.originalname, `/public/${req.file.filename}` )
-        
+        // If a single image is uploaded, process and detect objects in it        
         const processedImageBuffer = await processImage(req.file.path);
         const imageClassification = await detectObject(
           processedImageBuffer,

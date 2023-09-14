@@ -5,7 +5,7 @@ const path = require('path')
 require('dotenv').config();
 
 //Basic Dropbox Settings
-const dbx = new Dropbox({ accessToken: process.env.ACCESS_TOKEN });
+const dbx = new Dropbox({ accessToken: process.env.DBX_ACCESS_TOKEN });
 
 //Get the current account info
 export const getDbxAcc = () => {
