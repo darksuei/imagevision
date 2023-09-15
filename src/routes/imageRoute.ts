@@ -1,4 +1,5 @@
-const express = require('express');
+export {};
+import express, {Request, Response} from 'express';
 const multer = require('multer');
 const sharp = require('sharp');
 const detectObject = require('../utils/detection');
@@ -6,7 +7,7 @@ const detectObject = require('../utils/detection');
 const router = express.Router();
 let upload = multer({ dest: 'public/' });
 
-router.post('/image-classification', upload.single('image'), async (req, res) => {
+router.post('/image-classification', upload.single('image'), async (req:any, res:Response) => {
   if (!req.file && !req.files)
     return res.status(400).json({ error: 'Please upload an image.' });
 
@@ -58,7 +59,7 @@ router.post('/image-classification', upload.single('image'), async (req, res) =>
   }
 });
 
-async function processImage(imagePath) {
+async function processImage(imagePath:string) {
   let processedImageBuffer = await sharp(imagePath)
     .resize(224, 224)
     .toFormat('jpeg')

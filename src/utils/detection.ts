@@ -2,9 +2,10 @@ const tf = require("@tensorflow/tfjs");
 const mobilenet = require("@tensorflow-models/mobilenet");
 const image = require("get-image-data");
 
-function detectObject(buffer, confidenceThreshold) {
+function detectObject(buffer:Buffer, confidenceThreshold:number) {
   return new Promise((resolve, reject) => {
-    image(buffer, async (err, image) => {
+    image(buffer, async (err:Error, image:any) => {
+      console.log(typeof image)
       if (err) {
         reject(err);
       } else {
@@ -29,7 +30,7 @@ function detectObject(buffer, confidenceThreshold) {
         let temp = await model.classify(input);
 
         // Filter results based on the confidence threshold
-        const filteredResults = temp.filter((result) => result.probability >= confidenceThreshold);
+        const filteredResults = temp.filter((result:any) => result.probability >= confidenceThreshold);
 
         resolve(filteredResults);
       }
