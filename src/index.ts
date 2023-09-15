@@ -5,6 +5,7 @@ import { AppDataSource } from '../ORMconfig';
 import { Users } from './entities/Users'
 import { databaseConnection } from './utils/database';
 import bodyParser from 'body-parser';
+const { getDbxAcc } = require('./utils/dropbox');
 
 const environment = process.env.NODE_ENV || 'development';
 const envFileName = `.env.${environment}`;
@@ -13,14 +14,18 @@ require('dotenv').config({ path: envFileName })
 
 const imageRouter = require('./routes/imageRoute');
 const apiKeyRouter = require('./routes/apiKeyRoute');
+const dropBoxRouter = require('./routes/dropBoxRoute');
 
 export const userRepository = databaseConnection(Users);
+
+getDbxAcc();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(express.json());
 app.use('/api', imageRouter);
 app.use('/api', apiKeyRouter);
+app.use('/api', dropBoxRouter);
 app.use('/public', express.static('public'));
 
 app.get('*', (req:Request, res:Response)=>{
