@@ -5,8 +5,8 @@
   "main": "src/index.ts",
   "scripts": {
     "test": "jest --detectOpenHandles",
-    "start": "tsc && node dist/index.js",
-    "dev": "nodemon --exec ts-node src/index.ts"
+    "start": "NODE_ENV=development tsc && node dist/index.js", 
+    "dev": "NODE_ENV=development nodemon --exec ts-node src/index.ts"
   },
   "keywords": [],
   "author": "Suei",
@@ -25,6 +25,7 @@
     "nodemon": "^3.0.1",
     "sharp": "^0.25.4",
     "ts-node": "^10.9.1",
+    "typeorm": "^0.3.17",
     "typescript": "^5.2.2"
   },
   "devDependencies": {

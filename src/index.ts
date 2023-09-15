@@ -1,6 +1,10 @@
 import express, {Request, Response} from 'express';
 const app = express();
-require('dotenv').config()
+
+const environment = process.env.NODE_ENV || 'development';
+const envFileName = `.env.${environment}`;
+
+require('dotenv').config({ path: envFileName })
 
 const imageRouter = require('./routes/imageRoute');
 
