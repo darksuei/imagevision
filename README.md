@@ -1,37 +1,38 @@
-# ImageVision - RESTful API for Image Recognition 😸
+# Image Vision - A REST API for Image Recognition
 
-ImageVision is a RESTful API that utilizes image recognition algorithms and machine learning models to identify objects in images. Make requests to this API with images, and the API will return the identified objects with their confidence scores. Please note this API uses pre-trained models and is not perfect.
+ImageVision is an API that utilizes the tensorflow-mobile-net computer vision model to identify objects and patterns in images. Make requests to this API with image(s) and get a response of all the identified objects with their respective confidence values [probability of successful recognition].
+Checkout the fastify-dev branch to see my implementation with the fastify framework.
+
+Here's the link to the API >> https://image-vision-api.onrender.com/ <<
+
+                                                          
+Sample usage of the API >> [here](https://github.com/Suei43/imagevison-fe) <<
+
+Response caching and response time enhancement coming soon!
+
 - Image recognition using TensorFlow.js and MobileNet model.
 - Confidence threshold customization for object detection results.
-- Model selection option to choose specific image recognition models(in progress).
 
 ## Installation
 
 1. Clone the repository:
 
 ```
-
 git clone https://github.com/Suei43/imagevision.git
 
 cd imagevision
-
 ```
 
 2. Install the dependencies:
 
 ```
-
 npm install
-
 ```
 
-3. Download the TensorFlow MobileNet model:
-
-To run the API, you need to download the MobileNet model from TensorFlow Hub. You can use the following script to download it:
+3. Start the server in development mode:
 
 ```bash
-
-node download-model.js
+npm run dev
 
 ```
 
@@ -56,13 +57,16 @@ curl -X POST -F "image=@path/to/your/image.jpg" -F "confidenceThreshold=0.5" -F 
 ```
 
 ## Available Endpoints
-- **GET /api:** Welcome message 😁.
-
-- **POST /api/image-recognition:** Perform image recognition on the provided image with optional customization parameters.
+- **GET `/*` :** Welcome message/ Health Check 😁.
+- **GET `/api/image-recognition` :** Get more information on how to use the image recognition feature.  
+- **POST `/api/image-recognition` :** Perform image recognition on the provided image with optional customization parameters.
   - Request body:
     - image: The image file to be recognized.
-    - confidenceThreshold (optional): The confidence threshold for object detection (default: 0.5).
-    - model (optional): The specific model to be used for image recognition (default: MobileNet).
+    - confidenceThreshold (optional): The confidence threshold for object detection, between 0 and 1 (default: 0.1).
+   
+- **GET `/api/save` :** Get more information on how to use this endpoint to temporarily store images and files.
+- **POST `/api/save` :** Temporarily save your files and images but sending them here.
+- More Features coming soon!
 
 ## Contributing
 
