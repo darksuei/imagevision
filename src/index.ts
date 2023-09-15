@@ -1,5 +1,10 @@
 import express, {Request, Response} from 'express';
 const app = express();
+const cors = require('cors');
+import { AppDataSource } from '../ORMconfig';
+import { Users } from './entities/Users'
+import { databaseConnection } from './utils/database';
+import bodyParser from 'body-parser';
 
 const environment = process.env.NODE_ENV || 'development';
 const envFileName = `.env.${environment}`;
@@ -7,8 +12,15 @@ const envFileName = `.env.${environment}`;
 require('dotenv').config({ path: envFileName })
 
 const imageRouter = require('./routes/imageRoute');
+const apiKeyRouter = require('./routes/apiKeyRoute');
 
+export const userRepository = databaseConnection(Users);
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
+app.use(express.json());
 app.use('/api', imageRouter);
+app.use('/api', apiKeyRouter);
 app.use('/public', express.static('public'));
 
 app.get('*', (req:Request, res:Response)=>{
@@ -22,7 +34,7 @@ app.get('*', (req:Request, res:Response)=>{
     }
     
 
-    res.status(200).json(response);
+    return res.status(200).json(response);
 })
 
 app.listen(process.env.PORT || 3000, ()=>{
