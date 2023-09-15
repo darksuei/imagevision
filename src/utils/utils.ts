@@ -13,7 +13,6 @@ const validateApiKey = async (userRepository: any, key:string) => {
             API_KEY: key,
             },
         });
-        console.log("USER: ", user)
         return user ? true : false    
 }
 

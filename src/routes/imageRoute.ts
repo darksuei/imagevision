@@ -55,7 +55,7 @@ router.post('/image-classification', upload.single('image'), authMiddleware, asy
       });
     }
   } catch (err) {
-    console.log(err);
+    console.error(err);
     res.status(500).json({ error: err, message: 'Image classification failed' });
   }
 });

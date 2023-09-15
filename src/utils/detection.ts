@@ -5,7 +5,6 @@ const image = require("get-image-data");
 function detectObject(buffer:Buffer, confidenceThreshold:number) {
   return new Promise((resolve, reject) => {
     image(buffer, async (err:Error, image:any) => {
-      console.log(typeof image)
       if (err) {
         reject(err);
       } else {
