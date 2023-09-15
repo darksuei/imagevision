@@ -3,11 +3,12 @@ import express, {Request, Response} from 'express';
 const multer = require('multer');
 const sharp = require('sharp');
 const detectObject = require('../utils/detection');
+import authMiddleware from '../middlewares/auth';
 
 const router = express.Router();
 let upload = multer({ dest: 'public/' });
 
-router.post('/image-classification', upload.single('image'), async (req:any, res:Response) => {
+router.post('/image-classification', upload.single('image'), authMiddleware, async (req:any, res:Response) => {
   if (!req.file && !req.files)
     return res.status(400).json({ error: 'Please upload an image.' });
 
