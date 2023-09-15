@@ -21,6 +21,7 @@
     "dotenv": "^16.3.1",
     "dropbox": "^10.34.0",
     "fastify": "^4.22.0",
+    "fastify-file-upload": "^4.0.0",
     "fastify-multer": "^2.0.3",
     "get-image-data": "^5.0.0",
     "jimp": "^0.22.10",

@@ -1,15 +1,20 @@
 import Fastify, { FastifyPluginCallback } from 'fastify';
-import authMiddleware from '../middlewares/authorization';
-// const multipart = require('fastify-multipart')
-const fastifyMulter = require('fastify-multer')
+// import authMiddleware from '../middlewares/authorization';
+// const multipart = require('@fastify/multipart')
+// const fastifyMulter = require('fastify-multer')
 const sharp = require('sharp');
 const detectObject = require('../utils/detection');
 
 const fastify = Fastify()
 // fastify.register(multipart)
-fastify.register(fastifyMulter.contentParser)
+// fastify.register(fastifyMulter.contentParser)
 
-let upload = fastifyMulter({ dest: 'public/' });
+// let upload = fastifyMulter({ dest: 'public/' });
+
+const fileUpload = require('fastify-file-upload')
+
+fastify.register(fileUpload)
+
 
 const imageRecognitionHandler: FastifyPluginCallback = async (fastify, opts, next) => {
   fastify.get('/image-recognition', (req,reply) => {
@@ -21,9 +26,14 @@ const imageRecognitionHandler: FastifyPluginCallback = async (fastify, opts, nex
     })
   })
 
-  fastify.post('/image-recognition', {preHandler: [ authMiddleware, upload.single('image')]}, async(req: any, reply) => {
-    if (req.file && !req.files)
+  fastify.post('/image-recognition', async(req: any, reply) => {
+    if (!req.file && !req.files)
     return reply.code(400).send({ error: 'Please upload an image.' });
+
+  console.log('in')
+  console.log(req.file, req.files)
+  const files = await req.files
+  console.log(files)
 
   
   // If user specifies a confidence threshold, check if it is between 0 and 1
@@ -73,6 +83,11 @@ const imageRecognitionHandler: FastifyPluginCallback = async (fastify, opts, nex
       console.log(err);
       reply.code(500).send({ error: err, message: 'Image classification failed' });
     }
+  })
+
+  fastify.post('/img', async(req:any,reply) => {
+    console.log(req.file.image)
+    reply.send("NICE")
   })
 
   next()

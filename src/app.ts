@@ -12,6 +12,7 @@ import dropboxHandler from './routes/dropbox.route'
 
 export const userRepository = databaseConnection(Users);
 
+
 config()
 
 const PORT = process.env.PORT as number|undefined
@@ -20,6 +21,9 @@ getDbxAcc();
 const fastify = Fastify({
     logger: true
 })
+
+fastify.register(require('@fastify/multipart'))
+fastify.register(require('fastify-file-upload'))
 
 fastify.register(cors, {
     origin: '*',

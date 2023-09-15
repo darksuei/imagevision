@@ -2,12 +2,12 @@ import Fastify, { FastifyPluginCallback } from 'fastify';
 import authMiddleware from '../middlewares/authorization';
 import { uploadFileDbx } from '../utils/dropbox';
 const fastifyMulter = require('fastify-multer');
-const multipart = require('@fastify/multipart');
+// const multipart = require('@fastify/multipart');
 
 const fastify = Fastify();
 
 
-fastify.register(multipart)
+// fastify.register(multipart)
 fastify.register(fastifyMulter.contentParser)
 
 let upload = fastifyMulter({ dest: 'public/' });
