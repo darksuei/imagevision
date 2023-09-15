@@ -1,22 +1,21 @@
-const { createHash } = require('crypto')
+const { createHash } = require("crypto");
 
-const generateApiKey = (key:string) => {
+const generateApiKey = (key: string) => {
+  const apiKey: string = createHash("sha-256").update(key).digest("hex");
 
-    const apiKey: string = createHash('sha-256').update(key).digest('hex');
+  return apiKey;
+};
 
-    return apiKey;
-}
-
-const validateApiKey = async (userRepository: any, key:string) => {
-        const user = await userRepository.findOne({
-            where: {
-            API_KEY: key,
-            },
-        });
-        return user ? true : false    
-}
+const validateApiKey = async (userRepository: any, key: string) => {
+  const user = await userRepository.findOne({
+    where: {
+      API_KEY: key,
+    },
+  });
+  return user ? true : false;
+};
 
 module.exports = {
-    generateApiKey,
-    validateApiKey
-}
+  generateApiKey,
+  validateApiKey,
+};

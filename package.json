@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest --detectOpenHandles",
     "start": "NODE_ENV=development tsc && node dist/index.js",
-    "dev": "NODE_ENV=development nodemon --exec ts-node src/index.ts"
+    "dev": "NODE_ENV=development nodemon --exec ts-node src/index.ts",
+    "format": "prettier --write \"**/*.json\""
   },
   "keywords": [],
   "author": "Suei",
@@ -35,6 +36,7 @@
   },
   "devDependencies": {
     "jest": "^29.6.1",
+    "prettier": "^3.0.3",
     "supertest": "^6.3.3"
   },
   "repository": "git@github.com:Suei43/imagevisionAPI.git"
