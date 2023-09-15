@@ -30,6 +30,7 @@ app.get('*', (req:Request, res:Response)=>{
         message : "Welcome to image vision API!",
         documentation_url: "https://github.com/darksuei/imagevision",
         author: "Suei",
+        'x-api-key': "Grab an api-key from /api/auth to use the API. Make a GET request to /api/auth for more information.",
         note: "Make a POST request to /api/image-classification to classify an image. You can use the confidenceThreshold query parameter to specify the confidence threshold for the classification. The default value is 0.1. You can also upload multiple images at once by using the multiple attribute in the file input field."
     }
     

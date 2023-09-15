@@ -8,6 +8,15 @@ import authMiddleware from '../middlewares/auth';
 const router = express.Router();
 let upload = multer({ dest: 'public/' });
 
+router.get ('/image-classification', (req:Request, res:Response)=>{
+  const response = {
+    status : "Success",
+    message : "Have an API KEY? Send a POST request to this endpoint to classify an image. Don't have one yet? Make a GET request to /api/auth for more information.",
+    note : "Don't forget to add your api-key as an [x-api-key] header.",
+  }
+  return res.status(200).json(response);
+})
+
 router.post('/image-classification', upload.single('image'), authMiddleware, async (req:any, res:Response) => {
   if (!req.file && !req.files)
     return res.status(400).json({ error: 'Please upload an image.' });
